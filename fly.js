@@ -21,7 +21,7 @@
 
     platforms = this.physics.add.staticGroup();
 
-    platforms.create(400, 568, "ground").setScale(2).refreshBody();
+    // platforms.create(400, 568, "ground").setScale(2).refreshBody();
 
     player = this.physics.add.sprite(100, 250, "ship");
 
@@ -37,7 +37,7 @@
       fill: "#000",
     });
 
-    highscoreText = this.add.text(520, 16, "High Score: " + highScore, {
+    highscoreText = this.add.text(500, 16, "High Score: " + highScore, {
       fontSize: "32px",
       fill: "#000",
     });
@@ -53,7 +53,7 @@
   }
 
   function update() {
-    background.tilePositionX += 1;
+    background.tilePositionX += 3;
 
     if (cursors.left.isDown) {
       player.setVelocityX(-500);
@@ -86,7 +86,7 @@
 
     var x =
       player.x < 400
-        ? Phaser.Math.Between(400, 800)
+        ? Phaser.Math.Between(400, 740)
         : Phaser.Math.Between(20, 400);
 
     stars.enableBody(true, x, Phaser.Math.Between(20, 400), true, true);
