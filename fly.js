@@ -4,7 +4,6 @@
     this.load.image("ground", "assets/platform.png");
     this.load.image("star", "assets/star.png");
     this.load.image("bomb", "assets/bomb.png");
-    this.load.audio("music", ["assets/Chippy Music 12.wav"]);
     this.load.spritesheet("ship", "assets/ship.png", {
       frameWidth: 32,
       frameHeight: 48,
@@ -12,9 +11,6 @@
   }
 
   function create() {
-    // music = this.sound.add("music", { loop: true });
-    // music.play();
-
     background = this.add.tileSprite(
       400,
       300,
