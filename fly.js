@@ -1,6 +1,6 @@
 (() => {
   function preload() {
-    this.load.image("sky1", "assets/sky1.png");
+    this.load.image("pixelSky", "assets/pixelSky.png");
     this.load.image("ground", "assets/platform.png");
     this.load.image("star", "assets/star.png");
     this.load.image("bomb", "assets/bomb.png");
@@ -11,7 +11,13 @@
   }
 
   function create() {
-    this.add.image(400, 300, "sky1");
+    background = this.add.tileSprite(
+      400,
+      300,
+      config.width,
+      config.height,
+      "pixelSky"
+    );
 
     platforms = this.physics.add.staticGroup();
 
@@ -31,6 +37,11 @@
       fill: "#000",
     });
 
+    highscoreText = this.add.text(520, 16, "High Score: " + highScore, {
+      fontSize: "32px",
+      fill: "#000",
+    });
+
     bombs = this.physics.add.group();
 
     this.physics.add.collider(stars, platforms);
@@ -42,6 +53,8 @@
   }
 
   function update() {
+    background.tilePositionX += 1;
+
     if (cursors.left.isDown) {
       player.setVelocityX(-500);
     } else if (cursors.right.isDown) {
@@ -78,16 +91,16 @@
 
     stars.enableBody(true, x, Phaser.Math.Between(20, 400), true, true);
 
-    // if (score % 50 === 0) {
-    const bombNum = score / 100;
+    if (score % 50 === 0) {
+      const bombNum = score / 100;
 
-    var bomb = bombs.create(x, 16, "bomb");
-    bomb.setBounce(1);
-    bomb.setCollideWorldBounds(true);
+      var bomb = bombs.create(x, 16, "bomb");
+      bomb.setBounce(1);
+      bomb.setCollideWorldBounds(true);
 
-    bomb.setVelocity(Phaser.Math.Between(-500, 500), 200);
-    bomb.allowGravity = false;
-    // }
+      bomb.setVelocity(Phaser.Math.Between(-500, 500), 200);
+      bomb.allowGravity = false;
+    }
   };
 
   function dead(player, ground) {
@@ -104,6 +117,10 @@
       fill: "#000000",
       align: "center",
     });
+
+    if (score > highScore) {
+      highScore = score;
+    }
   }
   var config = {
     type: Phaser.AUTO,
@@ -131,6 +148,8 @@
   var bombs;
   var score = 0;
   var scoreText;
+  var highScore = 0;
+  var highScoreText;
 
   var game = new Phaser.Game(config);
 })();
