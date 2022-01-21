@@ -12,8 +12,8 @@
   }
 
   function create() {
-    music = this.sound.add("music", { loop: true });
-    music.play();
+    // music = this.sound.add("music", { loop: true });
+    // music.play();
 
     background = this.add.tileSprite(
       400,
