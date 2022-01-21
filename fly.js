@@ -20,7 +20,6 @@
     player = this.physics.add.sprite(100, 250, "ship");
 
     player.setBounce(0.2);
-    player.body.setGravityY(0);
     player.body.setCollideWorldBounds(true);
 
     cursors = this.input.keyboard.createCursorKeys();
@@ -32,24 +31,28 @@
       fill: "#000",
     });
 
+    bombs = this.physics.add.group();
+
     this.physics.add.collider(stars, platforms);
     this.physics.add.collider(stars, player, collectStars, null, this);
+    this.physics.add.collider(bombs, platforms);
+    this.physics.add.collider(bombs, player, dead, null, this);
 
     this.physics.add.collider(player, platforms, dead, null, this);
   }
 
   function update() {
     if (cursors.left.isDown) {
-      player.setVelocityX(-300);
+      player.setVelocityX(-500);
     } else if (cursors.right.isDown) {
-      player.setVelocityX(300);
+      player.setVelocityX(500);
     } else {
       player.setVelocityX(0);
     }
     if (cursors.up.isDown) {
-      player.setVelocityY(-300);
+      player.setVelocityY(-500);
     } else if (cursors.down.isDown) {
-      player.setVelocityY(300);
+      player.setVelocityY(500);
     } else {
       player.setVelocityY(0);
     }
@@ -71,9 +74,20 @@
     var x =
       player.x < 400
         ? Phaser.Math.Between(400, 800)
-        : Phaser.Math.Between(0, 400);
+        : Phaser.Math.Between(20, 400);
 
     stars.enableBody(true, x, Phaser.Math.Between(20, 400), true, true);
+
+    // if (score % 50 === 0) {
+    const bombNum = score / 100;
+
+    var bomb = bombs.create(x, 16, "bomb");
+    bomb.setBounce(1);
+    bomb.setCollideWorldBounds(true);
+
+    bomb.setVelocity(Phaser.Math.Between(-500, 500), 200);
+    bomb.allowGravity = false;
+    // }
   };
 
   function dead(player, ground) {
