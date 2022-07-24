@@ -55,15 +55,36 @@
 
     if (cursors.left.isDown) {
       player.setVelocityX(-500);
+    } else if (
+      cursors.left.isDown &&
+      (cursors.up.isDown || cursors.down.isDown)
+    ) {
+      player.setVelocityX(-250);
     } else if (cursors.right.isDown) {
       player.setVelocityX(500);
+    } else if (
+      cursors.right.isDown &&
+      (cursors.up.isDown || cursors.down.isDown)
+    ) {
+      player.setVelocityX(250);
     } else {
       player.setVelocityX(0);
     }
+
     if (cursors.up.isDown) {
       player.setVelocityY(-500);
+    } else if (
+      cursors.up.isDown &&
+      (cursors.left.isDown || cursors.right.isDown)
+    ) {
+      player.setVelocityY(-250);
     } else if (cursors.down.isDown) {
       player.setVelocityY(500);
+    } else if (
+      cursors.down.isDown &&
+      (cursors.left.isDown || cursors.right.isDown)
+    ) {
+      player.setVelocityY(250);
     } else {
       player.setVelocityY(0);
     }
@@ -87,7 +108,12 @@
         ? Phaser.Math.Between(400, 740)
         : Phaser.Math.Between(20, 400);
 
-    stars.enableBody(true, x, Phaser.Math.Between(20, 400), true, true);
+    var y =
+      player.x < 400
+        ? Phaser.Math.Between(400, 740)
+        : Phaser.Math.Between(20, 400);
+
+    stars.enableBody(true, x, y, true, true);
 
     if (score % 50 === 0) {
       const bombNum = score / 100;
